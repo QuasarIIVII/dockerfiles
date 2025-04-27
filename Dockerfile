@@ -67,6 +67,8 @@ RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' $HOME/.zshrc
 RUN . /tmp/env \
 	&& SHELL=/bin/zsh sudo -u user bash -c "$SH_ANACONDA" anaconda.sh init
 
+RUN rm /tmp/env
+
 USER user
 WORKDIR $HOME
 
