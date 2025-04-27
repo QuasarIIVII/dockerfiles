@@ -32,7 +32,10 @@ RUN . /tmp/env \
 
 #	python3-dev
 
-RUN mkdir -p $HOME/.config/nvim
+ENV RT_HOME=$HOME
+ENV HOME="/home/user"
+
+RUN mkdir -p $RT_HOME/.config/nvim
 RUN echo """\
 language en_US.UTF-8\n\
 \n\
@@ -52,7 +55,8 @@ set pastetoggle=<F5>\n\
 \n\
 autocmd FileType python setlocal noexpandtab\n\
 autocmd FileType python setlocal softtabstop=0\n\
-""" > $HOME/.config/nvim/init.vim
+""" > $RT_HOME/.config/nvim/init.vim
+RUN cp $RT_HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' ~/.zshrc
@@ -61,7 +65,6 @@ RUN chsh -s /bin/zsh
 RUN chsh user -s /bin/zsh
 
 RUN sudo -u user sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-ENV HOME="/home/user"
 RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' $HOME/.zshrc
 
 RUN . /tmp/env \
