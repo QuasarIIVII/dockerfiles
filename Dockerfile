@@ -56,6 +56,7 @@ set pastetoggle=<F5>\n\
 autocmd FileType python setlocal noexpandtab\n\
 autocmd FileType python setlocal softtabstop=0\n\
 """ > $RT_HOME/.config/nvim/init.vim
+RUN mkdir -p $HOME/.config/nvim
 RUN cp $RT_HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
