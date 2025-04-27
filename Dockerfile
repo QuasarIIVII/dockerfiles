@@ -33,7 +33,10 @@ RUN . /tmp/env \
 #	python3-dev
 
 ENV RT_HOME=$HOME
-ENV HOME="/home/user"
+
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' ~/.zshrc
+RUN chsh -s /bin/zsh
 
 RUN mkdir -p $RT_HOME/.config/nvim
 RUN echo """\
@@ -59,14 +62,11 @@ autocmd FileType python setlocal softtabstop=0\n\
 RUN mkdir -p $HOME/.config/nvim
 RUN cp $RT_HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' ~/.zshrc
-RUN chsh -s /bin/zsh
-
-RUN chsh user -s /bin/zsh
+ENV HOME="/home/user"
 
 RUN sudo -u user sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' $HOME/.zshrc
+RUN chsh user -s /bin/zsh
 
 RUN . /tmp/env \
 	&& SHELL=/bin/zsh sudo -u user bash -c "$SH_ANACONDA" anaconda.sh init
