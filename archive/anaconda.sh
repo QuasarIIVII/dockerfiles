@@ -70,10 +70,7 @@ case "$1" in
 				echo "Anaconda installation completed successfully."
 				break
 			fi
-			sleep 1
 		done
-
-		sleep 1
 		;;
 	init)
 		if [ ! -f $LOGFILE ]; then

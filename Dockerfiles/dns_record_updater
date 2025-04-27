@@ -74,13 +74,13 @@ RUN . /tmp/env \
 
 RUN rm /tmp/env
 
+WORKDIR $HOME
 RUN sudo -u user wget "https://raw.githubusercontent.com/QuasarIIVII/dockerfiles/main/archive/dns_record_updater.py"
-RUN sudo -u user conda install -y \
+RUN sudo -u user zsh -c "conda install -y \
 	conda-forge::cloudflare \
-	anaconda::requests
+	anaconda::requests"
 
 USER user
-WORKDIR $HOME
 
 ENTRYPOINT ["python3", "dns_record_updater.py"]
 CMD ["--help"]
