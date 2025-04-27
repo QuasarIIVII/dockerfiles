@@ -66,6 +66,7 @@ ENV HOME="/home/user"
 RUN sudo -u user sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN sed -i.bac 's/^ZSH_THEME="robbyrussell"$/ZSH_THEME="agnoster"/' $HOME/.zshrc
 RUN chsh user -s /bin/zsh
+RUN mkdir -p $HOME/.config/nvim
 RUN cp $RT_HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
 RUN . /tmp/env \
