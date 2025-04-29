@@ -69,8 +69,10 @@ RUN chsh user -s /bin/zsh
 RUN mkdir -p $HOME/.config/nvim
 RUN cp $RT_HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
-RUN . /tmp/env \
-	&& SHELL=/bin/zsh sudo -u user bash -c "$SH_ANACONDA" anaconda.sh init
+ENV PATH=$HOME/anaconda3/bin:$PATH
+RUN conda install -y mamba -n base -c conda-forge
+
+RUN echo 'eval "$(mamba shell hook --shell zsh)"' >> $HOME/.zshrc
 
 RUN rm /tmp/env
 
